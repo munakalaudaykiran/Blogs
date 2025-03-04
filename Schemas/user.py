@@ -10,10 +10,16 @@ class UserResponse(BaseModel):
     user_id:int
     first_name:str
     last_name:str
-    
+    email : EmailStr
+
+
     class config:
         from_attributes=True
 
+class UserUpdate(BaseModel):
+    first_name : str
+    last_name : str
+    email : EmailStr
 
 
 class UserLogin(BaseModel):

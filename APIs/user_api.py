@@ -1,6 +1,6 @@
 from Blogs.utils import hashpassword
 from Blogs.models.User import UserDetails
-from Blogs.schemas.user import CreateUser
+from Blogs.schemas.user import CreateUser,UserUpdate
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
 
@@ -24,3 +24,27 @@ def create_user(users: CreateUser, db: Session):
 def get_users(db: Session):
     return db.query(UserDetails).all()
 
+def get_user(user_id: int ,db:Session):
+    db_user = db.query(UserDetails).filter(UserDetails.user_id == user_id).first()
+    if not db_user :
+        raise HTTPException(status_code= 401,detail="user not found")
+    return db_user
+
+def update_user(user_id: int ,db:Session,user_update : UserUpdate):
+    db_user = db.query(UserDetails).filter(UserDetails.user_id == user_id).first()
+    if not db_user:
+        raise HTTPException(status_code=401,detail="user not found")
+    db_user.first_name = user_update.first_name
+    db_user.last_name = user_update.last_name
+    db_user.email = user_update.email
+    db.commit()
+    db.refresh(db_user)
+    return db_user
+
+def delete_user(user_id: int ,db: Session):
+    db_user = db.query(UserDetails).filter(UserDetails.user_id == user_id).first()
+    if not db_user:
+        raise HTTPException(status_code=401,detail="user not found")
+    db.delete(db_user)
+    db.commit()
+    return {"details": "user deleted successfully"}
