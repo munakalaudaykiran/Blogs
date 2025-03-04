@@ -6,14 +6,13 @@ class CreateUser(BaseModel):
     email:EmailStr
     password:str
 
-class UserResponse(CreateUser):
+class UserResponse(BaseModel):
     user_id:int
     first_name:str
     last_name:str
     
     class config:
-        orm_mode=True
-
+        from_attributes=True
 
 
 
