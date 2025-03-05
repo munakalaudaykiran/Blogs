@@ -12,3 +12,4 @@ class UserDetails(Base):
     password = Column(String,nullable=False)
 
     posts = relationship("PostDetails", back_populates="owner", cascade="all, delete")
+    comments = relationship("CommentDetails", back_populates="owner", cascade="all, delete")

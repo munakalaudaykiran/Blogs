@@ -13,4 +13,5 @@ class PostDetails(Base):
     created_at = Column(DateTime,default=func.now())
     updated_at = Column(DateTime,default=func.now(),onupdate= func.now())
 
-    owner = relationship("UserDetails", back_populates="posts")
+    owner = relationship("UserDetails", back_populates="posts",cascade="all, delete")
+    comments = relationship("CommentDetails", back_populates="post", cascade="all, delete")
