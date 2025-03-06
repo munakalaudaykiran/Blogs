@@ -15,3 +15,4 @@ class PostDetails(Base):
 
     owner = relationship("UserDetails", back_populates="posts",cascade="all, delete")
     comments = relationship("CommentDetails", back_populates="post", cascade="all, delete")
+    likes = relationship("PostLikes",back_populates="post",cascade="all, delete")
